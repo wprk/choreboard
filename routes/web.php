@@ -18,5 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/chores', 'ChoresController@index');
-Route::get('/chores/{chore}', 'ChoresController@show');
+
+Route::model('households', 'Household');
+Route::model('chores', 'Chore');
+Route::resource('households', 'HouseholdsController', [
+    'only' => ['index', 'show'],
+//    'middleware' => ['auth']
+]);
+Route::resource('households.chores', 'ChoresController', [
+    'only' => ['index', 'show', 'store'],
+//    'middleware' => ['auth']
+]);

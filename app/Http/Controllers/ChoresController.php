@@ -3,20 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Chore;
+use App\Household;
 use Illuminate\Http\Request;
 
 class ChoresController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Household $household)
     {
-        $chores = Chore::latest()->get();
+        $chores = $household->chores;
 
-        return view('chores.index', compact('chores'));
+        return view('household.chores.index', compact('chores'));
     }
 
     /**
@@ -32,23 +38,30 @@ class ChoresController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \App\Household  $household
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Household $household, Request $request)
     {
-        //
+        $household->addChore([
+            'name' => request('name'),
+            'description' => request('description')
+        ]);
+
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \App\Household  $household
      * @param  \App\Chore  $chore
      * @return \Illuminate\Http\Response
      */
-    public function show(Chore $chore)
+    public function show(Household $household, Chore $chore)
     {
-        return view('chores.show', compact('chore'));
+        return view('household.chores.show', compact('chore'));
     }
 
     /**

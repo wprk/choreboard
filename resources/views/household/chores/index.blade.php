@@ -10,12 +10,16 @@
                     <div class="panel-body">
                         @foreach ($chores as $chore)
                             <article>
-                                <h4>{{ $chore->name }}</h4>
+                                <h4>
+                                    <a href="{{ $chore->path() }}">
+                                        {{ $chore->name }}
+                                    </a>
+                                </h4>
                                 <div class="body">{{ $chore->description }}</div>
                             </article>
 
                             <hr>
-                        @endforeach;
+                        @endforeach
                     </div>
                 </div>
             </div>

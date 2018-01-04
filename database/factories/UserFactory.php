@@ -26,7 +26,7 @@ $factory->define(App\Household::class, function (Faker $faker) {
     $user = factory(App\User::class)->create();
     return [
         'user_id' => $user->id,
-        'name' => $user->name . '\'s Household'
+        'name' => $user->name . 's Household'
     ];
 });
 

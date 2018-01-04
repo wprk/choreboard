@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Household;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HouseholdsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,11 @@ class HouseholdsController extends Controller
      */
     public function index()
     {
-        //
+        Auth::loginUsingId(1);
+
+        $households = Household::where('user_id', auth()->id())->latest()->get();
+
+        return view('household.index', compact('households'));
     }
 
     /**
@@ -46,7 +56,7 @@ class HouseholdsController extends Controller
      */
     public function show(Household $household)
     {
-        //
+        return view('household.show', compact('household'));
     }
 
     /**
